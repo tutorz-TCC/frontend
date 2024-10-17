@@ -3,19 +3,20 @@ import { StyleSheet } from "react-native";
 
 const formStyle = StyleSheet.create({
 	input: {
-		height: 40,
+		height: 50,
 		borderRadius: 10,
 		backgroundColor: "#FFFFFF",
 		borderColor: "#FFFFFF",
 	},
 	submit_button: {
-		height: 50,
+		height: 60,
 		borderRadius: 15,
-	},
-	default_font: {
-		color: "#000000",
+		backgroundColor: "#FFFFFF",
+		borderColor: "#FFFFFF",
 
-		fontSize: 16,
+		display:"flex",
+		justifyContent:"center",
+		alignItems:"center"
 	},
 });
 

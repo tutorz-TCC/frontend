@@ -1,5 +1,6 @@
-//Estilos padrão do projeto
-import { StyleSheet } from "react-native";
+//Estilos padrão do projeto 
+import { memo } from "react";
+import { StyleSheet, useWindowDimensions } from "react-native";
 
 const defaultStyles = StyleSheet.create({
 	//Paleta de cores principais do design
@@ -18,6 +19,35 @@ const defaultStyles = StyleSheet.create({
 	azul_real:{
 		backgroundColor:"#2F63A2",
 		color:"#2F63A2"
+	},
+
+	//Configurações referente as fontes utilizadas
+	fonte_padrao:{
+		color:"#000000",
+		fontFamily:"Inter",
+		fontSize:20
+	},
+	fonte_invertida:{
+		color:"#FFFFFF",
+		fontFamily:"Inter",
+		fontSize:20
+	},
+	fonte_titulo_estilizado:{
+		color:"#0C0635",
+		fontFamily:"Inter",
+		fontSize:20
+	},
+	destaque:{
+		marginTop:20,
+		marginBottom:20
+	},
+
+	//formas geométricas estilizadas
+	forma_oval:{
+		transform:[{scaleX:2}],
+		borderRadius:999999999,
+		position:"absolute",
+		top:0
 	}
 })
 
