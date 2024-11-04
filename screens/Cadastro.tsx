@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import ToggleTextInput from "../assets/form-utils/ToggleTextInput";
+import ToggleTextInput from "../assets/components/ToggleTextInput";
 import {
   Keyboard,
   Image,
@@ -12,7 +12,6 @@ import {
 
 import defaultStyles from "../styles/defaultStyles";
 import formStyle from "../styles/formStyles";
-import Background from "../assets/design-utils/Background";
 
 const Cadastro  = () => {
   const [teclado, setTeclado] = useState<boolean>(false);
@@ -42,7 +41,6 @@ const Cadastro  = () => {
         flexDirection: "column",
       }}
     >
-	<Background/>
       <View
         style={[
           defaultStyles.azul_noturno,

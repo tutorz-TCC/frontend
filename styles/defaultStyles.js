@@ -41,14 +41,6 @@ const defaultStyles = StyleSheet.create({
 		marginTop:20,
 		marginBottom:20
 	},
-
-	//formas geométricas estilizadas
-	forma_oval:{
-		transform:[{scaleX:2}],
-		borderRadius:999999999,
-		position:"absolute",
-		top:0
-	}
 })
 
 export default defaultStyles;
