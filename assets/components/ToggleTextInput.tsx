@@ -33,6 +33,7 @@ const ToggleTextInput: React.FC<ToggleTextInputProps> = ({
     >
       <TextInput
         placeholder={placeholder}
+	placeholderTextColor="#777"
         secureTextEntry={seguranca}
         style={[
           formStyle.input,
