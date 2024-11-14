@@ -13,9 +13,54 @@ import {
   View,
 } from "react-native";
 import Background from "../assets/components/Background";
+import { useNavigation } from "@react-navigation/native";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 const Login = () => {
   const [teclado, setTeclado] = useState<boolean>(false);
+  const [usuario, setUsuario] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
+
+  const navigation = useNavigation();
+
+  type autenticacao = {
+    usuario: string;
+    senha: string;
+  };
+
+  const gerenciadorLogin = async ({ usuario, senha }: autenticacao) => {
+    try {
+      const token = await fetch("http://127.0.0.1:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          loginuser: usuario,
+          password: senha,
+        }),
+      })
+        .then((dados) => {
+          if (dados.ok) {
+            return dados.json();
+          } else {
+            throw new Error("Erro na requisição");
+          }
+        })
+        .then((dados) => JSON.stringify(dados.token,null,2) )
+        .catch((erro) => console.log(erro));
+
+      if (typeof token === "string") {
+        await EncryptedStorage.setItem("token", token);
+      } else {
+        throw new Error("O usuário não existe");
+      }
+
+      navigation.navigate("Main")
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const olho = {
     active: require("../assets/source-images/eye.png"),
@@ -51,12 +96,14 @@ const Login = () => {
           )}
         </View>
 
-        <Text style={defaultStyles.fonte_invertida}>Login</Text>
+        <Text style={defaultStyles.fonte_invertida}>Usuario</Text>
         <TextInput
           autoComplete="email"
           placeholder="Por favor, insira seu e-mail"
           placeholderTextColor="#777"
           style={formStyle.input}
+          onChangeText={setUsuario}
+          value={usuario}
         />
 
         <Text style={defaultStyles.fonte_invertida}>Senha</Text>
@@ -64,14 +111,21 @@ const Login = () => {
           autoComplete="password"
           iconSource={olho}
           placeholder="Por favor, insira sua senha"
+          onChangeText={setSenha}
+          value={senha}
         ></ToggleTextInput>
 
-        <TouchableOpacity style={formStyle.submit_button}>
+        <TouchableOpacity
+          style={formStyle.submit_button}
+          onPress={() => {
+            gerenciadorLogin({ usuario, senha });
+          }}
+        >
           <Text style={defaultStyles.fonte_titulo_estilizado}>ENTRAR</Text>
         </TouchableOpacity>
 
         {!teclado && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
             <Text
               style={[
                 defaultStyles.fonte_invertida,

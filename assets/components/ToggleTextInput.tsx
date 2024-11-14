@@ -15,12 +15,13 @@ interface ToggleTextInputProps extends TextInputProps {
     active: ImageSourcePropType;
     inactive: ImageSourcePropType;
   };
-  placeholder?: string;
 }
 
 const ToggleTextInput: React.FC<ToggleTextInputProps> = ({
   iconSource,
   placeholder,
+  onChangeText,
+  value
 }) => {
   const [seguranca, setSeguranca] = useState(true);
   return (
@@ -44,6 +45,8 @@ const ToggleTextInput: React.FC<ToggleTextInputProps> = ({
             borderBottomLeftRadius: 0,
           },
         ]}
+	onChangeText={onChangeText}
+	value={value}
       />
       <View
         style={{
