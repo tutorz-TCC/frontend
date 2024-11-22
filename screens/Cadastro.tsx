@@ -17,8 +17,14 @@ import formStyle from "../styles/formStyles";
 import { useNavigation } from "@react-navigation/native";
 
 const Cadastro = () => {
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 	const [teclado, setTeclado] = useState<boolean>(false);
+
+	const [nomeSocial, setNomeSocial] = useState("");
+	const [CPF, setCPF] = useState("");
+	const [email, setEmail] = useState("");
+	const [senha, setSenha] = useState("");
+	const [confirmeSenha, setConfirmeSenha] = useState("");
 
 	const olho = {
 		active: require("../assets/source-images/eye.png"),
@@ -62,6 +68,8 @@ const Cadastro = () => {
 						placeholder="Por favor, insira seu nome completo"
 						placeholderTextColor="#777"
 						style={formStyle.input}
+						onChangeText={setNomeSocial}
+						value={nomeSocial}
 					/>
 
 					<Text style={defaultStyles.fonte_invertida}>CPF</Text>
@@ -70,6 +78,8 @@ const Cadastro = () => {
 						placeholder="Por favor, insira seu CPF"
 						placeholderTextColor="#777"
 						style={formStyle.input}
+						onChangeText={setCPF}
+						value={CPF}
 					/>
 
 					<Text style={defaultStyles.fonte_invertida}>E-mail</Text>
@@ -78,6 +88,8 @@ const Cadastro = () => {
 						placeholder="Por favor, insira um endereço de e-mail"
 						placeholderTextColor="#777"
 						style={formStyle.input}
+						onChangeText={setEmail}
+						value={email}
 					/>
 
 					<Text style={defaultStyles.fonte_invertida}>Senha</Text>
@@ -85,6 +97,8 @@ const Cadastro = () => {
 						autoComplete="password"
 						iconSource={olho}
 						placeholder="Por favor, digite uma senha"
+						onChangeText={setSenha}
+						value={senha}
 					></ToggleTextInput>
 
 					<Text style={defaultStyles.fonte_invertida}>Confirme a senha</Text>
@@ -92,14 +106,27 @@ const Cadastro = () => {
 						autoComplete="password"
 						iconSource={olho}
 						placeholder="Por favor, repita a senha"
+						onChangeText={setConfirmeSenha}
+						value={confirmeSenha}
 					></ToggleTextInput>
 				</ScrollView>
-				<TouchableOpacity style={formStyle.submit_button}>
+				<TouchableOpacity
+					style={formStyle.submit_button}
+					onPress={() => {
+						console.log(nomeSocial);
+						console.log(CPF);
+						console.log(email);
+						console.log(senha);
+						console.log(confirmeSenha);
+					}}
+				>
 					<Text style={defaultStyles.fonte_titulo_estilizado}>CADASTRAR</Text>
 				</TouchableOpacity>
 				{!teclado && (
 					<TouchableOpacity
-					onPress={() => {navigation.navigate('Login')}}
+						onPress={() => {
+							navigation.navigate("Login");
+						}}
 					>
 						<Text
 							style={[

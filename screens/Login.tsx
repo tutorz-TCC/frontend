@@ -28,41 +28,42 @@ const Login = () => {
 		senha: string;
 	};
 
-	const gerenciadorLogin = async ({ usuario, senha }: autenticacao) => {
-		try {
-			const token = await fetch("http://127.0.0.1:8080/api/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					email: usuario,
-					password: senha,
-				}),
+	const buscarLogin = async ({ usuario, senha }: autenticacao) => {
+		return await fetch("http://127.0.0.1:8080/api/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: usuario,
+				password: senha,
+			}),
+		})
+			.then((dados) => {
+				if (dados.ok) {
+					return dados.json();
+				} else {
+					throw new Error("Erro na requisição");
+				}
 			})
-				.then((dados) => {
-					if (dados.ok) {
-						return dados.json();
-					} else {
-						 
-						console.log(usuario);
-						console.log(senha);
-						console.log(dados);
-						throw new Error("Erro na requisição");
-					}
-				})
-				.then((dados) => JSON.stringify(dados.token, null, 2))
-				.catch((erro) => console.log(erro));
+			.then((dados) => JSON.stringify(dados.token, null, 2))
+			.catch((erro) => console.log(erro));
+	};
+
+	const gerenciadorToken = async (credenciais: autenticacao) => {
+		try {
+			const token = await buscarLogin(credenciais);
 
 			if (typeof token === "string") {
-				await EncryptedStorage.setItem("token", token);
+				EncryptedStorage.setItem("token", token);
+				const newToken = await EncryptedStorage.getItem("token");
 			} else {
-				throw new Error("O usuário não autenticado");
+				throw new Error("Tipagem do token com resultado inexperado");
 			}
 
 			navigation.navigate("Main");
-		} catch (error) {
-			console.log(error);
+		} catch (erro) {
+			console.error(erro);
 		}
 	};
 
@@ -122,7 +123,7 @@ const Login = () => {
 				<TouchableOpacity
 					style={formStyle.submit_button}
 					onPress={() => {
-						gerenciadorLogin({ usuario, senha });
+						gerenciadorToken({ usuario, senha });
 					}}
 				>
 					<Text style={defaultStyles.fonte_titulo_estilizado}>ENTRAR</Text>
