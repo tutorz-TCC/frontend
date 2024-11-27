@@ -1,7 +1,7 @@
 import defaultStyles from "../styles/defaultStyles";
 import formStyle from "../styles/formStyles";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ToggleTextInput from "../assets/components/ToggleTextInput";
 
 import {
@@ -15,6 +15,7 @@ import {
 import Background from "../assets/components/Background";
 import { useNavigation } from "@react-navigation/native";
 import EncryptedStorage from "react-native-encrypted-storage";
+import { useAuth } from "../app-flow/AuthProvider";
 
 type autenticacao = {
   usuario: string;
@@ -22,6 +23,7 @@ type autenticacao = {
 };
 
 const Login = () => {
+  const { authToken, autorizarToken } = useAuth();
   const [teclado, setTeclado] = useState<boolean>(false);
   const [usuario, setUsuario] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
@@ -54,8 +56,8 @@ const Login = () => {
       const token = await buscarLogin(credenciais);
 
       if (typeof token === "string") {
-        EncryptedStorage.setItem("token", token);
-        const newToken = await EncryptedStorage.getItem("token");
+        await EncryptedStorage.setItem("token", token);
+	autorizarToken();
       } else {
         throw new Error("Tipagem do token com resultado inexperado");
       }
