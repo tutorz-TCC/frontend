@@ -12,14 +12,12 @@ import MainNavigation from "../app-flow/MainNavigation";
 import EncryptedStorage from "react-native-encrypted-storage";
 import { useAuth } from "../app-flow/AuthProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 
 
 type Materia = { nome: string; imagem: ImageSourcePropType };
 type Materias = Array<Materia>;
 
-const Main = () => {
-	const navigation = useNavigation();
+const Main = ({navigation}) => {
   const { authToken, autorizarToken } = useAuth();
   const [token, setToken] = useState<string | null>("");
 
@@ -34,7 +32,7 @@ const Main = () => {
 
   const selecionarMateria = async(materia:string) => {
 	  await AsyncStorage.setItem("materia", materia)
-	  navigation.navigate("Search")
+	  navigation.navigate("SearchStack")
   };
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import { View } from "react-native/types";
 import Main from "../screens/Main";
 import ImageComponent from "../assets/components/ImageComponent";
 import Search from "../screens/Search";
+import SearchStack from "./SearchStack";
 
 type Props = {};
 
@@ -27,9 +28,9 @@ const MainNavigation = (props: Props) => {
 				options={{ tabBarIcon: ({ }) => <ImageComponent url={icons[0]} /> }}
 			/>
 			<Tab.Screen
-				name="Search"
-				component={Search}
-				options={{ tabBarIcon: ({ }) => <ImageComponent url={icons[1]} size={10}/> }}
+				name="SearchStack"
+				component={SearchStack}
+				options={{ tabBarIcon: ({ }) => <ImageComponent url={icons[1]} /> }}
 			/>
 			<Tab.Screen
 				name="Classes"

@@ -25,7 +25,7 @@ type cadastro = {
   active: boolean;
 };
 
-const Cadastro = () => {
+const SignIn = () => {
   const navigation = useNavigation();
   const [teclado, setTeclado] = useState<boolean>(false);
 
@@ -43,14 +43,14 @@ const Cadastro = () => {
     return !isNaN(parseInt(cpf)) && cpf.trim() != "" && cpf.length == 11;
   };
 
-  const [cadastroEfetuado, setCadastroEfetuado] = useState<boolean>(false);
+  const [cadastroEfetuado, setSignInEfetuado] = useState<boolean>(false);
 
   const olho = {
     active: require("../assets/source-images/eye.png"),
     inactive: require("../assets/source-images/eye-off.png"),
   };
 
-  const solicitarCadastro = async (usuario: cadastro) => {
+  const solicitarSignIn = async (usuario: cadastro) => {
     return await fetch("http://127.0.0.1:8080/api/register", {
       method: "POST",
       headers: {
@@ -60,7 +60,7 @@ const Cadastro = () => {
     })
       .then((dados) => {
         if (dados.ok) {
-          setCadastroEfetuado(true);
+          setSignInEfetuado(true);
           return dados.json();
         } else {
           throw new Error("falha no processo de cadastro");
@@ -94,7 +94,7 @@ const Cadastro = () => {
       >
         <View style={[defaultStyles.caixa_mensagem]}>
           <Text style={[defaultStyles.texto_mensagem]}>
-            Cadastro efetuado com sucesso
+            SignIn efetuado com sucesso
           </Text>
           <Text style={[defaultStyles.texto_mensagem]}>redirecionando...</Text>
         </View>
@@ -182,7 +182,7 @@ const Cadastro = () => {
               return;
             }
 
-            await solicitarCadastro({
+            await solicitarSignIn({
               nome_social: nomeSocial,
               CPF: CPF,
               email: email,
@@ -219,4 +219,4 @@ const Cadastro = () => {
   );
 };
 
-export default Cadastro;
+export default SignIn;
