@@ -27,7 +27,7 @@ const Search: React.FC<Props> = ({ navigation }) => {
   const [pesquisa, setPesquisa] = useState("");
 
   const buscarCursos = async (): Promise<Array<tipoCurso>> => {
-    return await fetch("http://127.0.0.1:3333/api/cursos", {
+    return await fetch("http://127.0.0.1:3333/cursos", {
       method: "GET",
       headers: { "Content-Type": "application/json", pesquisa: pesquisa },
     })
@@ -45,7 +45,6 @@ const Search: React.FC<Props> = ({ navigation }) => {
 
   const gerenciadorCursos = async () => {
     const response = await buscarCursos();
-    console.log(response);
     setCursos(response);
     setCarregando(false);
   };
